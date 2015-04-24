@@ -1,0 +1,14 @@
+web:
+  build: httpd/
+  ports:
+    - "80:80"
+  volumes:
+    - /usr/share/webdrupal:/usr/share/
+db:
+  build: mysql/
+  ports:
+    - '3606' : '3606'
+  volumes:
+    - /var/lib/mysql:/var/lib/mysql
+  environment:
+    MYSQL_DATABASE: webdrupaldb
