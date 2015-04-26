@@ -1,17 +1,17 @@
-FROM fedora:21
+FROM webdrupal/fedora
 MAINTAINER Brad Bowman <beeradb@gmail.com>
 
-RUN yum -y update && yum clean all
-RUN yum -y install community-mysql-server community-mysql pwgen supervisor psmisc net-tools && yum clean all
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+RUN touch /var/log/mysqld.log
+RUN chown mysql:root /var/log/mysqld.log
 
-ADD ./start.sh /start.sh
-ADD ./config_mysql.sh /config_mysql.sh
-ADD ./supervisord.conf /etc/supervisord.conf
+RUN yum -y install community-mysql-server community-mysql hostname && yum clean all
 
-RUN chmod 755 /start.sh
-RUN chmod 755 /config_mysql.sh
-RUN /config_mysql.sh
+ADD start.sh /start.sh
+RUN chmod -v +x /start.sh
+
+ADD my.cnf /etc/my.cnf.d/my.cnf
+RUN chmod o-w /etc/my.cnf.d/my.cnf
 
 EXPOSE 3306
-
 CMD ["/bin/bash", "/start.sh"]
