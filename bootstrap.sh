@@ -41,7 +41,7 @@ fi
 
 # This is kind of crappy but I want to keep it as a relative link so it works outside
 # of the container / vagrant.
-if [ ! -f /usr/share/webdrupal/html/sites/default/settings.php ]; then 
+if [ ! -f /usr/share/webdrupal/html/sites/default/settings.php ]; then
   echo "linking settings file"
   ln -s ../../../../conf/settings.php /usr/share/webdrupal/html/sites/default/settings.php
 fi
