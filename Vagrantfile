@@ -13,8 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 2
   end
   config.vm.synced_folder 'webdrupal/', '/usr/share/webdrupal'
-  config.vm.synced_folder 'webux/', '/usr/share/webux'
-  config.vm.synced_folder 'containers/', '/usr/local/containers'
   config.vm.synced_folder 'conf/', '/usr/share/conf'
+  config.vm.synced_folder 'containers/', '/usr/local/containers'
   config.vm.provision "shell", path: './bootstrap.sh'
 end
