@@ -8,7 +8,7 @@ Install [vagrant](vagrantup.com/downloads.html) and [VirtualBox](https://www.vir
 
 Before running vagrant you need to create a webdrupal/ and webdrupal-conf directory. Both of these get mounted by the vagrant virtual machine.
 
-## webdrupal-conf/
+## conf/
 This folder should contain a valid settings.php file and a "webdrupal.sql" which will be imported during provisioning.
 
 ## webdrupal/
