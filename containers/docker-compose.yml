@@ -1,15 +1,44 @@
-web:
-  build: httpd/
+proxy:
+  build: haproxy/
   ports:
     - "80:80"
+    - "70:70"
+  expose:
+    - "80"
+    - "70"
+  links:
+    - web1
+    - web2
+web1:
+  build: httpd/
+  ports:
+    - "81:81"
+  expose:
+    - "80"
+    - "81"
   links:
     - db
+    - memcache
   volumes:
     - /usr/share/webdrupal:/usr/share/webdrupal
-    - /usr/share/conf:/usr/share/conf
+web2:
+  build: httpd/
+  expose:
+    - "80"
+  links:
+    - db
+    - memcache
+  volumes:
+    - /usr/share/webdrupal:/usr/share/webdrupal
 db:
   build: mysql/
   ports:
     - "3306:3306"
   volumes:
     - /var/lib/mysql:/var/lib/mysql
+memcache:
+  build: memcache/
+  expose:
+    - "11211"
+  ports:
+    - "11211:11211"

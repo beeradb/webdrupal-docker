@@ -1,18 +1,17 @@
-FROM fedora:21
+FROM webdrupal/base
 MAINTAINER Brad Bowman <beeradb@gmail.com>
 
-RUN rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm
-RUN rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
-RUN rpm -Uvh http://rpms.famillecollet.com/remi-release-21.rpm
-
 RUN yum install -y curl httpd
-RUN yum --enablerepo=remi,remi-55-php55 -y install php php-common php-xdebug
-RUN yum --enablerepo=remi,remi-55-php55 -y install php-pdo php-mcrypt php-gd php-mysql
+RUN yum -y install php php-common php-xdebug php-pecl-apc && yum clean all
+RUN yum -y install php-pdo php-mcrypt php-gd php-mysql php-pecl-memcache && yum clean all
 
-EXPOSE 80
-
+ADD conf/php.ini /etc/php.ini
 ADD run-apache.sh /run-apache.sh
 RUN chmod -v +x /run-apache.sh
-ADD ./vhosts.conf /etc/httpd/conf.d/vhosts.conf
+ADD conf/vhosts.conf /etc/httpd/conf.d/vhosts.conf
+ADD conf/httpd.conf /etc/httpd/conf/httpd.conf
+
+EXPOSE 80
+EXPOSE 81
 
 CMD ["/run-apache.sh"]
