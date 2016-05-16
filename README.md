@@ -1,3 +1,6 @@
+# Deprecated
+This is no longer maintained. I would not use it.
+
 Installation
 =================
 
